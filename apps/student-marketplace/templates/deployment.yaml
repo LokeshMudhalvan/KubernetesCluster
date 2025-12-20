@@ -1,0 +1,76 @@
+{{- range $key, $value := .Values.deployments }}
+{{- if eq $key "frontend" }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $value.name }}
+  labels:
+    app: {{ $value.name }}
+    {{- with $value.labels }}
+    {{- include "addLabels" . | nindent 4 }}
+    {{- end }}
+spec:
+  replicas: {{ $value.replicas }}
+  selector:
+    matchLabels:
+      app: {{ $value.name }}
+      {{- with $value.labels }}
+      {{- include "addLabels" . | nindent 6 }}
+      {{- end }}
+  template:
+    metadata:
+      labels:
+        app: {{ $value.name }}
+        {{- with $value.labels }}
+        {{- include "addLabels" . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+      - name: {{ $value.name }}
+        image: {{ $value.image }}:{{ $value.tag }}
+        ports:
+        - containerPort: {{ $value.targetPort }}
+
+{{- else if eq $key "backend" }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $value.name }}
+  labels:
+    app: {{ $value.name }}
+    {{- with $value.labels }}
+    {{- include "addLabels" . | nindent 4 }}
+    {{- end }}
+spec:
+  replicas: {{ $value.replicas }}
+  selector:
+    matchLabels:
+      app: {{ $value.name }}
+      {{- with $value.labels }}
+      {{- include "addLabels" . | nindent 6 }}
+      {{- end }}
+  template:
+    metadata:
+      labels:
+        app: {{ $value.name }}
+        {{- with $value.labels }}
+        {{- include "addLabels" . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+      - name: {{ $value.name }}
+        image: {{ $value.image }}:{{ $value.tag }}
+        ports:
+        - containerPort: {{ $value.targetPort }}
+        env:
+        - name: FLASK_APP
+          value: run.py
+        {{- with $.Values.postgres.env }}
+        - name: DATABASE_URL
+          value: postgresql://{{ .POSTGRES_USER }}:{{ .POSTGRES_PASSWORD }}@db:{{ $.Values.postgres.targetPort }}/{{ .POSTGRES_DB }}
+        {{- end }}
+{{- else }}
+  {{- fail "Deployment has not been enabled for types excluding backend and frontend" }}   
+{{- end }}
+---
+{{- end }}

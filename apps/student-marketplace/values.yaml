@@ -1,0 +1,47 @@
+deployments: 
+  frontend: 
+    image: lokeshmudhalvan/student-marketplace-frontend
+    tag: 0.0.10
+    replicas: 1
+    lables: {}
+    name: student-marketplace-frontend
+    targetPort: 3001 # This is used as both the container port and service port
+    # port: 5433 can be used to set service port 
+    serviceName: frontend-service
+    ingressName: frontend-ingress
+    hostname: student-market-place.com
+    certSecretName: frontend-cert
+
+  backend: 
+    image: lokeshmudhalvan/student-marketplace-backend
+    tag: 0.0.2
+    replicas: 1
+    labels: {}
+    name: student-marketplace-backend
+    targetPort: 5001
+    serviceName: backend-service
+    ingressName: backend-ingress
+    hostname: backend.com
+    certSecretName: backend-cert
+
+postgres: 
+  enabled: true
+  name: student-marketplace-db
+  replicas: 1
+  image: postgres
+  tag: 15
+  labels: {}
+  serviceName: db
+  targetPort: 5432 
+  secretName: postgres-secret
+  env:
+    POSTGRES_PASSWORD: postgres
+    POSTGRES_USER: postgres
+    POSTGRES_DB: StudentMarketplace
+
+ingress: 
+  enabled: true 
+  type: ingressroute #ingress or ingressroute 
+
+tls: 
+  enabled: true

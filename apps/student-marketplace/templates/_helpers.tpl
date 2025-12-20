@@ -1,0 +1,3 @@
+{{- define "addLabels" }}
+    {{- toYaml . -}}
+{{- end }}
