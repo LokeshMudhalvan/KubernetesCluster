@@ -1,1 +1,3 @@
 security/cert-manager/root-ca-secret.yaml
+security/keycloak/admin-password.yaml
+security/keycloak/db-password.yaml
