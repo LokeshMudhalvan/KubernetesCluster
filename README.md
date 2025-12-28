@@ -46,6 +46,7 @@ TLS certificates are fully automated using cert-manager. Certificates are issued
 - Traefik ingress controller operational
 - cert-manager issuing and managing TLS certificates
 - Applications accessible over HTTPS
+- Keycloak OIDC login
 
 ---
 
