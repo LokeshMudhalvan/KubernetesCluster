@@ -19,6 +19,9 @@ Traefik is deployed as the ingress controller to manage incoming HTTP and HTTPS 
 ### cert-manager
 TLS certificates are fully automated using cert-manager. Certificates are issued via a ClusterIssuer and automatically renewed, allowing applications to be securely exposed over HTTPS without manual certificate management.
 
+### Keycloak
+Keycloak is deployed to provide centralized authentication and authorization for applications running in the cluster. It supports industry-standard protocols such as OAuth 2.0, OpenID Connect, and SAML, enabling secure single sign-on (SSO) and identity federation. Integrated with Traefik via OIDC, Keycloak enforces access control at the ingress or application layer, allowing services to rely on a shared identity provider rather than implementing custom authentication logic. This setup simplifies user management, improves security consistency across services, and enables role- and realm-based access control within the Kubernetes environment
+
 ---
 
 ## Traffic Flow
