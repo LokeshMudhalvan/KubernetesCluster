@@ -1,0 +1,63 @@
+serviceAccounts:
+  server:
+    create: true
+    name: ""
+
+server:
+  name: server
+  image:
+    repository: quay.io/prometheus/prometheus
+    tag: ""
+
+  configPath: /etc/config/prometheus.yml
+
+  global:
+    scrape_interval: 1m
+    scrape_timeout: 10s
+    evaluation_interval: 1m
+  
+  ingress:
+    enabled: true
+    ingressClassName: "traefik"
+    annotations:
+      cert-manager.io/cluster-issuer: ca-cluster-issuer
+    hosts: 
+      - prometheus.local.com
+    path: /
+    pathType: Prefix
+    tls: 
+      - secretName: prometheus-server-tls
+        hosts:
+          - prometheus.local.com
+
+  strategy:
+    type: RollingUpdate
+
+  persistentVolume:
+    enabled: true
+    accessModes:
+      - ReadWriteOnce
+    mountPath: /data
+    size: 8Gi
+
+  replicaCount: 1
+
+  service:
+    enabled: true
+    servicePort: 80
+    type: ClusterIP
+
+alertmanager:
+  enabled: true
+
+  persistence:
+    enabled: true
+
+kube-state-metrics:
+  enabled: true
+
+prometheus-node-exporter:
+  enabled: true
+
+prometheus-pushgateway:
+  enabled: false
