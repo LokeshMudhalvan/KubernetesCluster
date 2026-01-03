@@ -50,11 +50,11 @@ Keycloak is deployed to provide centralized authentication and authorization for
 - cert-manager issuing and managing TLS certificates
 - Applications accessible over HTTPS
 - Keycloak OIDC login
+- Observability with Prometheus and Grafana
 
 ---
 
 ## Future Improvements
-- Add observability with Prometheus and Grafana
 - Implement NetworkPolicies for improved security
 - Enable horizontal pod autoscaling
 - Add CI/CD for manifest and Helm chart validation
