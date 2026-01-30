@@ -4,8 +4,9 @@ variable "realm_id" {
 
 variable "clients" {
   type = map(object({
-    name        = string
-    access_type = string
+    name                = string
+    access_type         = string
+    valid_redirect_uris = list(string)
   }))
 
   validation {

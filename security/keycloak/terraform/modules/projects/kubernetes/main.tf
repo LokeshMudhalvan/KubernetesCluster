@@ -3,8 +3,9 @@ module "client" {
   realm_id = var.realm_id
   clients = {
     kubernetes = {
-      name        = "kubernetes-tf-test"
-      access_type = "PUBLIC"
+      name                = "kubernetes-tf-test"
+      access_type         = "PUBLIC"
+      valid_redirect_uris = ["http://localhost:8000", "http://localhost:18000"]
     }
   }
   providers = {
