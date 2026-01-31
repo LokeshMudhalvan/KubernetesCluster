@@ -18,10 +18,10 @@ module "groups" {
   realm_id = var.realm_id
   groups = {
     clusterAdmin = {
-      name = "clusterAdmin"
+      name = "ClusterAdmin"
     }
     podViewer = {
-      name = "podViewer"
+      name = "PodViewer"
     }
   }
   providers = {
@@ -91,7 +91,7 @@ module "user_attribute_mappers" {
     name = {
       name           = "name"
       claim_name     = "name"
-      user_attribute = "name"
+      user_attribute = "username"
     }
   }
   providers = {
@@ -105,8 +105,9 @@ module "group_membership_mappers" {
   client_scope_id = module.client_scopes.ids["groups"]
   group_mappings = {
     groups = {
-      name       = "groups"
-      claim_name = "groups"
+      name             = "groups"
+      claim_name       = "groups"
+      enable_full_path = false
     }
   }
   providers = {

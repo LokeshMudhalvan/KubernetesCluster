@@ -8,7 +8,8 @@ variable "client_scope_id" {
 
 variable "group_mappings" {
   type = map(object({
-    name       = string
-    claim_name = string
+    name             = string
+    claim_name       = string
+    enable_full_path = bool
   }))
 }

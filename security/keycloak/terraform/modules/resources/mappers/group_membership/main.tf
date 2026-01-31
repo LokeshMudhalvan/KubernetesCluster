@@ -4,4 +4,5 @@ resource "keycloak_openid_group_membership_protocol_mapper" "group_membership_ma
   client_scope_id = var.client_scope_id
   name            = each.value.name
   claim_name      = each.value.claim_name
+  full_path       = each.value.enable_full_path
 }
