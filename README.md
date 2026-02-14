@@ -51,6 +51,7 @@ Keycloak is deployed to provide centralized authentication and authorization for
 - Applications accessible over HTTPS
 - Keycloak OIDC login
 - Observability with Prometheus and Grafana
+- Usage of Terraform to configure Keycloak
 
 ---
 
