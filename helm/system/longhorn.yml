@@ -1,0 +1,36 @@
+persistence:
+  defaultClassReplicaCount: 1
+  defaultDataLocality: best-effort
+  dataEngine: v2
+
+csi:
+  kubeletRootDir: "/var/snap/microk8s/common/var/lib/kubelet"
+
+# TODO: Have minio backup here 
+defaultBackupStore:
+  # -- Endpoint used to access the default backupstore. (Options: "NFS", "CIFS", "AWS", "GCP", "AZURE")
+  backupTarget: ~
+  # -- Name of the Kubernetes secret associated with the default backup target.
+  backupTargetCredentialSecret: ~
+  # -- Number of seconds that Longhorn waits before checking the default backupstore for new backups. The default value is "300". When the value is "0", polling is disabled.
+  pollInterval: ~
+
+defaultSettings: 
+  v2DataEngine: true
+  defaultDataPath: /dev/vda 
+  defaultDataLocality: true
+  deletingConfirmationFlag: true
+
+longhornUI:
+  replicas: 1
+  affinity: {}
+
+httproute:
+  enabled: true
+  parentRefs: 
+    - name: traefik
+      namespace: traefik
+  hostnames: 
+   - longhorn.example.com
+  path: /
+  pathType: PathPrefix

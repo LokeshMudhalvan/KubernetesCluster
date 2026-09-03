@@ -1,0 +1,28 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: traefik
+  namespace: traefik
+  annotations:
+    cert-manager.io/issuer: cert-issuer-stg
+spec:
+  gatewayClassName: traefik
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 8000 
+      allowedRoutes:
+          namespaces:
+            from: All
+    - name: https 
+      protocol: HTTPS
+      port: 8443 
+      hostname: "*.example.com"
+      allowedRoutes:
+        namespaces: 
+          from: All
+      tls: 
+        mode: Terminate
+        certificateRefs: 
+          - kind: Secret
+            name: traefik-cert

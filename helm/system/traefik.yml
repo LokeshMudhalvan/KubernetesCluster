@@ -1,0 +1,50 @@
+image:  
+  tag:  v3.7.10
+  pullPolicy: IfNotPresent
+
+deployment:
+  enabled: true
+  kind: Deployment
+  replicas: 1  
+  terminationGracePeriodSeconds: 60
+
+ingressClass:  
+  enabled: true
+  isDefaultClass: true
+
+gateway:
+  enabled: false
+
+gatewayClass:  
+  enabled: true
+
+providers:
+  kubernetesGateway:
+    enabled: true
+
+api:  
+  dashboard: true
+
+ports:
+  traefik:
+    port: 8080
+  web:
+    port: 8000
+    exposedPort: 80
+  websecure:
+    asDefault: true
+    port: 8443
+    exposedPort: 443
+  metrics:
+    port: 9100
+    exposedPort: 9100
+
+service:
+  enabled: true
+  single: true
+  spec:
+    type: LoadBalancer
+
+accessLog:
+  enabled: true
+  format: common 

@@ -1,0 +1,30 @@
+global:
+  enabled: true
+
+injector:
+  enabled: false 
+
+server:
+  logLevel: info
+  logFormat: standard
+  dataStorage: 
+    size: 5Gi 
+  httproute:
+    enabled: true
+    activeService: true
+    hostnames: 
+      - vault.example.com
+    parentRefs: 
+      - name: traefik
+        namespace: traefik 
+    
+    matches:
+      - path:
+          type: PathPrefix
+          value: /
+
+  standalone:
+    enabled: true 
+
+ui:
+  enabled: true

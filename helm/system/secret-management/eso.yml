@@ -1,0 +1,11 @@
+image:
+  tag: v2.10.0 
+
+webhook:
+  image:
+    tag: v2.10.0
+
+certController:
+  image:
+    tag: v2.10.0
+  
