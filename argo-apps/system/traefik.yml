@@ -18,7 +18,7 @@ spec:
       ref: values
     - repoURL: https://github.com/LokeshMudhalvan/KubernetesCluster.git
       targetRevision: main
-      path: config/system/traefik.yml
+      path: config/system/traefik
       directory: 
         recurse: true
   destination:
