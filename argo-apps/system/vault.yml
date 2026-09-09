@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vault 
+  namespace: argo
+spec:
+  project: default
+  sources:
+    - chart: vault 
+      repoURL: https://helm.releases.hashicorp.com
+      targetRevision: 0.34.1 
+      helm:
+        releaseName: vault 
+        valueFiles: 
+          - $values/helm/system/secret-management/vault.yml
+    - chart: external-secrets 
+      repoURL: https://charts.external-secrets.io
+      targetRevision: 2.10.0 
+      helm:
+        releaseName: eso
+        valueFiles: 
+          - $values/helm/system/secret-management/eso.yml
+    - repoURL: https://github.com/LokeshMudhalvan/KubernetesCluster.git
+      targetRevision: main
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: metallb
+  syncPolicy: 
+    automated: 
+      prune: true
+      selfHeal: true
