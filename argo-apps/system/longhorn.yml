@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: longhorn 
+  namespace: argo
+spec:
+  project: default
+  sources:
+    - chart: longhorn 
+      repoURL: https://charts.longhorn.io
+      targetRevision: 1.21.1
+      helm:
+        releaseName: longhorn 
+        valueFiles: 
+          - $values/helm/system/longhorn.yml
+    - repoURL: https://github.com/LokeshMudhalvan/KubernetesCluster.git
+      targetRevision: main
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: metallb
+  syncPolicy: 
+    automated: 
+      prune: true
+      selfHeal: true
