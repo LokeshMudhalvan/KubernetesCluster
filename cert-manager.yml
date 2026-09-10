@@ -23,7 +23,7 @@ spec:
         recurse: true
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: metallb
+    namespace: cert-manager
   syncPolicy: 
     automated: 
       prune: true
