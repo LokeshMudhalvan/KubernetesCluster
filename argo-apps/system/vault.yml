@@ -27,7 +27,7 @@ spec:
       ref: values
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: metallb
+    namespace: vault
   syncPolicy: 
     automated: 
       prune: true
