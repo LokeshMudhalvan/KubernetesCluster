@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: traefik 
   namespace: argo
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   sources:
