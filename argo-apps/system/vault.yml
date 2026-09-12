@@ -28,9 +28,18 @@ spec:
   destination:
     server: "https://kubernetes.default.svc"
     namespace: vault
+  ignoreDifferences: 
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: vault
+      jqPathExpressions:
+        - .spec.rules[].backendRefs[].group
+        - .spec.rules[].backendRefs[].kind
+        - .spec.rules[].backendRefs[].weight
   syncPolicy: 
     automated: 
       prune: true
       selfHeal: true
     syncOptions: 
       - ServerSideApply=true
+      - RespectIgnoreDifferences=true
