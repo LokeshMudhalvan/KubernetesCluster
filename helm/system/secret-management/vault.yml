@@ -15,9 +15,17 @@ server:
     hostnames: 
       - vault.example.com
     parentRefs: 
-      - name: traefik
+      - group: gateway.networking.k8s.io	
+        kind: Gateway 
+        name: traefik
         namespace: traefik 
-    
+    rules:
+      - backendRefs:
+        - group: ""
+          kind: Service
+          name: vault
+          port: 8200
+          weight: 1
     matches:
       - path:
           type: PathPrefix
