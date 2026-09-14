@@ -1,7 +1,7 @@
 #!/bin/sh
 
 initialized=$(vault status | grep -i initialized | awk '{print $2}')
-unseal_file="data/unseal-keys.txt"
+unseal_file="unseal-keys.txt"
 
 if [ "$initialized" != "true" ]; then
     echo "Vault not initialized. Initializing Vault"

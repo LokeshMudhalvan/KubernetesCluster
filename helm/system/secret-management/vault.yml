@@ -30,10 +30,11 @@ server:
   volumes: 
     - name: startup-script
       configMap: 
+        defaultMode: 700
         name: startup-script
 
   volumeMounts: 
-    - mountPath: /vault
+    - mountPath: /vault/data
       name: startup-script
 
   standalone:
