@@ -23,14 +23,14 @@ server:
       - path:
           type: PathPrefix
           value: /
-  # postStart:
-  #   - /bin/sh
-  #   - -c
-  #   - /vault/data/startup.sh
+  postStart:
+    - /bin/sh
+    - -c
+    - /vault/data/startup.sh
   volumes: 
     - name: startup-script
       configMap: 
-        defaultMode: 0700
+        defaultMode: 0750
         name: startup-script
 
   volumeMounts: 
