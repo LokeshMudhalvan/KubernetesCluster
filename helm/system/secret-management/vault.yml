@@ -27,10 +27,13 @@ server:
     - /bin/sh
     - -c
     - /vault/startup.sh
-  extraVolumes: 
-    - type: configMap
-      name: startup-script
-      path: /vault
+  volumes: 
+    - name: startup-script
+      configMap: 
+        name: startup-script
+
+  volumeMounts: 
+    - mountPath: /vault
 
   standalone:
     enabled: true 
