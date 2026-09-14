@@ -1,45 +1,50 @@
-global:
-  enabled: true
-
-injector:
-  enabled: false 
-
-server:
-  logLevel: info
-  logFormat: standard
-  dataStorage: 
-    size: 5Gi 
-  httproute:
-    enabled: true
-    activeService: true
-    hostnames: 
-      - vault.example.com
-    parentRefs: 
-      - group: gateway.networking.k8s.io	
-        kind: Gateway 
-        name: traefik
-        namespace: traefik 
-    matches:
-      - path:
-          type: PathPrefix
-          value: /
-  postStart:
-    - /bin/sh
-    - -c
-    - /vault/data/startup.sh
-  volumes: 
-    - name: startup-script
-      configMap: 
-        defaultMode: 0750
-        name: startup-script
-
-  volumeMounts: 
-    - mountPath: /vault/data/startup.sh
-      name: startup-script
-      subPath: startup.sh
-
-  standalone:
-    enabled: true 
-
-ui:
-  enabled: true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vault 
+  namespace: argo
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - chart: vault 
+      repoURL: https://helm.releases.hashicorp.com
+      targetRevision: 0.34.1 
+      helm:
+        releaseName: vault 
+        valueFiles: 
+          - $values/helm/system/secret-management/vault.yml
+    - chart: external-secrets 
+      repoURL: https://charts.external-secrets.io
+      targetRevision: 2.10.0 
+      helm:
+        releaseName: eso
+        valueFiles: 
+          - $values/helm/system/secret-management/eso.yml
+    - repoURL: https://github.com/LokeshMudhalvan/KubernetesCluster.git
+      targetRevision: main
+      ref: values
+    - repoURL: https://github.com/LokeshMudhalvan/KubernetesCluster.git
+      targetRevision: main
+      path: config/system/vault
+      directory: 
+        recurse: true 
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: vault
+  ignoreDifferences: 
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: vault
+      jqPathExpressions:
+        - .spec.rules[].backendRefs[].group
+        - .spec.rules[].backendRefs[].kind
+        - .spec.rules[].backendRefs[].weight
+  syncPolicy: 
+    automated: 
+      prune: true
+      selfHeal: true
+    syncOptions: 
+      - ServerSideApply=true
+      - RespectIgnoreDifferences=true

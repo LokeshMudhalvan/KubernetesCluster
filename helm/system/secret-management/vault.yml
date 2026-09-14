@@ -1,0 +1,45 @@
+global:
+  enabled: true
+
+injector:
+  enabled: false 
+
+server:
+  logLevel: info
+  logFormat: standard
+  dataStorage: 
+    size: 5Gi 
+  httproute:
+    enabled: true
+    activeService: true
+    hostnames: 
+      - vault.example.com
+    parentRefs: 
+      - group: gateway.networking.k8s.io	
+        kind: Gateway 
+        name: traefik
+        namespace: traefik 
+    matches:
+      - path:
+          type: PathPrefix
+          value: /
+  postStart:
+    - /bin/sh
+    - -c
+    - /vault/data/startup.sh
+  volumes: 
+    - name: startup-script
+      configMap: 
+        defaultMode: 0750
+        name: startup-script
+
+  volumeMounts: 
+    - mountPath: /vault/data/startup.sh
+      name: startup-script
+      subPath: startup.sh
+
+  standalone:
+    enabled: true 
+
+ui:
+  enabled: true
