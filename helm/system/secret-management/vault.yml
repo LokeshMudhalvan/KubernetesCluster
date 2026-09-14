@@ -23,6 +23,14 @@ server:
       - path:
           type: PathPrefix
           value: /
+  postStart:
+    - /bin/sh
+    - -c
+    - /vault/startup.sh
+  extraVolumes: 
+    - type: configMap
+      name: startup-script
+      path: /vault
 
   standalone:
     enabled: true 

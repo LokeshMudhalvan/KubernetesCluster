@@ -1,0 +1,21 @@
+#!/bin/sh
+
+initialized=$(vault status | grep -i initialized | awk '{print $2}')
+unseal_file="data/unseal-keys.txt"
+
+if [ "$initialized" != "true" ]; then
+    echo "Vault not initialized. Initializing Vault"
+    vault operator init > $unseal_file
+fi
+
+threshold=$(vault status | grep -i threshold | awk '{print $2}')
+
+count=1
+while [ $count -le $threshold ]
+do
+    key=$(cat $unseal_file | grep -i "Unseal Key ${count}" | awk '{print $4}') 
+    vault operator unseal $key
+    count=$((count + 1))
+done
+
+echo "done"
