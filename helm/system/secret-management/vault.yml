@@ -34,8 +34,9 @@ server:
         name: startup-script
 
   volumeMounts: 
-    - mountPath: /vault/data
+    - mountPath: /vault/data/startup.sh
       name: startup-script
+      subPath: startup.sh
 
   standalone:
     enabled: true 
