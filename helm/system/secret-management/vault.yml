@@ -30,7 +30,7 @@ server:
   volumes: 
     - name: startup-script
       configMap: 
-        defaultMode: 700
+        defaultMode: 0700
         name: startup-script
 
   volumeMounts: 
