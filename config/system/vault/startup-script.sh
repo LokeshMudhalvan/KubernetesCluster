@@ -1,5 +1,7 @@
 #!/bin/sh
 
+sleep 5
+
 initialized=$(vault status | grep -i initialized | awk '{print $2}')
 unseal_file="/vault/data/unseal-keys.txt"
 
