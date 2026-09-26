@@ -26,6 +26,16 @@ spec:
   destination:
     server: "https://kubernetes.default.svc"
     namespace: awx
+  ignoreDifferences: 
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: awx-httproute
+      jqPathExpressions:
+        - .spec.rules[].parentRefs[].group
+        - .spec.rules[].backendRefs[].group
+        - .spec.rules[].backendRefs[].kind
+        - .spec.rules[].backendRefs[].weight
+
   syncPolicy: 
     automated: 
       prune: true
