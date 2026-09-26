@@ -3,7 +3,7 @@ AWX:
   name: awx
   spec:
     admin_user: admin
-    security_context_settings:
+    postgres_security_context_settings:
       fsGroup: 26
 
 rbac:
