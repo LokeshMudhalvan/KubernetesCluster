@@ -3,6 +3,8 @@ AWX:
   name: awx
   spec:
     admin_user: admin
+    web_replicas: 1
+    task_replicas: 1
     postgres_security_context_settings:
       fsGroup: 26
 
