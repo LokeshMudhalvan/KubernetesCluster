@@ -31,7 +31,8 @@ spec:
       kind: HTTPRoute
       name: awx-httproute
       jqPathExpressions:
-        - .spec.rules[].parentRefs[].group
+        - .spec.parentRefs[].group
+        - .spec.parentRefs[].kind
         - .spec.rules[].backendRefs[].group
         - .spec.rules[].backendRefs[].kind
         - .spec.rules[].backendRefs[].weight
